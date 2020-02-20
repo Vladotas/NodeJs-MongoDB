@@ -1,6 +1,8 @@
 const express = require('express');
 const path = require ('path');
 const exphbs = require ('express-handlebars');
+const morgan = require('morgan');
+const methodOverride = require('method-override');
 
 
 //Initializations
@@ -19,14 +21,16 @@ app.set('view engine','.hbs');
 
 // Middlewares
 app.use(express.urlencoded({extended: false}));
+app.use(morgan('dev'));
+app.use(methodOverride('_method'));
 
 // Global Variables
 
 
 // Routes
-app.get('/',(req, res) =>{
-    res.render('index');
-});
+app.use(require('./routes/index.routes'))
+app.use(require('./routes/notes.routes'))
+app.use(require('./routes/user.routes'))
 
 // Static Files
 app.use(express.static(path.join(__dirname,'public')));
