@@ -5,7 +5,8 @@ const MONGODB_URI = `mongodb://${TECNOBRO_MONGODB_HOST}/${TECNOBRO_MONGODB_DATAB
 
 mongoose.connect(MONGODB_URI,{
     useUnifiedTopology: true,
-    useNewUrlParser: true
+    useNewUrlParser: true,
+    useCreateIndex: true
 })
     .then(db => console.log("database is connected"))
     .catch(err => console.log(err));
