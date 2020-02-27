@@ -9,8 +9,8 @@ notesCtrl.renderNoteForm = (req,res) => {
 notesCtrl.createNewNote = async (req,res) => {
     const {title, description} = req.body;
     const newNote = new Note({title, description});
-    await newNote.save();
     newNote.user = req.user.id;
+    await newNote.save();
     req.flash('success_msg','Note Added Successfully');
     res.redirect('/notes');
 }
@@ -40,7 +40,7 @@ notesCtrl.updateNote = async (req,res) => {
 
 //Delete
 notesCtrl.deleteNote = async (req,res) => {
-   await Note.findByIdAndDelete(req.params.id);
+   const note = await Note.findByIdAndDelete(req.params.id);
     if(note.user != req.user.id) {
         req.flash('error','Not Authorized');
         return res.redirect('/notes');
